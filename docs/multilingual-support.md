@@ -33,6 +33,19 @@ The first Aymara render downloads the `facebook/mms-tts-ayr` model. Later render
 
 Edge Neural usually provides the most natural output but requires network access to the Edge online voice service. eSpeak NG is compact and fully offline, but uses formant synthesis and is less natural than recording-based neural voices.[1] MMS-TTS generates neural speech locally, but the Central Aymara checkpoint is licensed **CC-BY-NC 4.0**; do not use that model for commercial purposes without reviewing and complying with its license.[3]
 
+## Commit the multilingual update
+
+After reviewing the working tree, commit the synchronized local project changes and push them to GitHub:
+
+```bash
+cd /Users/fanrongqing/Desktop/Manusworkspace/voicestudio
+git add CONTRIBUTING.md README.md client/src/pages/Home.tsx docs package.json requirements-extended.txt scripts server shared todo.md
+git commit -m "feat: add multilingual voice support"
+git push
+```
+
+The current project state has passed the standard test suite and type check. To rerun the already-installed optional Central Aymara integration test, use `RUN_MMS_INTEGRATION=1 pnpm vitest run server/localVoice.mms.integration.test.ts`.
+
 ## References
 
 [1] [eSpeak NG project and language support](https://github.com/espeak-ng/espeak-ng)

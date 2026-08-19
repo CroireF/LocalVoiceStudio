@@ -10,6 +10,13 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/create-voice" component={Home} />
+      <Route path="/create-voice/batch" component={Home} />
+      <Route path="/create-voice/live-preview" component={Home} />
+      <Route path="/create-voice/clone" component={Home} />
+      <Route path="/create-humming" component={Home} />
+      <Route path="/create-humming/text-hum" component={Home} />
+      <Route path="/create-humming/melody-guided" component={Home} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

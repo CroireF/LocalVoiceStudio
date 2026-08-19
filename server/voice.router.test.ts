@@ -25,3 +25,31 @@ describe("voice.generate", () => {
     })).rejects.toThrow();
   });
 });
+
+describe("humming.generate", () => {
+  it("rejects a humming request outside the supported local BPM range", async () => {
+    const caller = appRouter.createCaller(emptyContext);
+    await expect(caller.humming.generate({
+      text: "A local humming phrase",
+      mode: "random",
+      mood: "Hopeful",
+      bpm: 34,
+      style: "Ambient",
+      gender: "female",
+      baseFrequency: 220,
+      pitch: 0,
+      volume: 85,
+    })).rejects.toThrow();
+  });
+});
+
+describe("clone.generate", () => {
+  it("rejects a language that the optional local XTTS runner does not expose", async () => {
+    const caller = appRouter.createCaller(emptyContext);
+    await expect(caller.clone.generate({
+      referenceId: "reference-12345678",
+      text: "A local cloned render",
+      language: "quechua" as never,
+    })).rejects.toThrow();
+  });
+});

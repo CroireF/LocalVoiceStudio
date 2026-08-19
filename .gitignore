@@ -56,6 +56,8 @@ coverage/
 # Dependency directories
 jspm_packages/
 .venv/
+.clone-venv/
+.cosyvoice-venv/
 
 # TypeScript cache
 *.tsbuildinfo

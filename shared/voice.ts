@@ -16,6 +16,14 @@ export type StudioLanguage =
 export type VoiceGender = "female" | "male";
 export type AudioFormat = "mp3" | "wav" | "aac";
 export type VoiceEngine = "edge" | "espeak" | "mms";
+export type CloneEngine = "xtts-v2" | "cosyvoice2" | "cosyvoice3";
+export type HummingEngine = "local-hum" | "cosyvoice2" | "cosyvoice3";
+
+export const CLONE_ENGINE_OPTIONS: Array<{ id: CloneEngine; label: string; detail: string }> = [
+  { id: "xtts-v2", label: "XTTS-v2", detail: "Local reference clone" },
+  { id: "cosyvoice2", label: "CosyVoice 2", detail: "Optional local zero-shot voice" },
+  { id: "cosyvoice3", label: "CosyVoice 3", detail: "Optional local instruct voice" },
+];
 
 export type VoicePreset = {
   id: string;
@@ -56,6 +64,28 @@ export const DEFAULT_SCRIPT: Record<StudioLanguage, string> = {
   arabic: "في أول ضوء من الصباح، يمكن لكل قصة أن تجد صوتها الخاص.",
   french: "Dans la première lumière du matin, chaque histoire peut trouver sa propre voix.",
 };
+
+export function prepareBatchJobs(script: string, lineBreakOutput: boolean) {
+  if (!lineBreakOutput) return script.trim() ? [script.trim()] : [];
+  return script.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+}
+
+export function isLatestPreviewRequest(requestId: number, latestRequestId: number) {
+  return requestId === latestRequestId;
+}
+
+export function createAutoPreviewSequencer() {
+  let latestRequestId = 0;
+  return {
+    issue() {
+      latestRequestId += 1;
+      return latestRequestId;
+    },
+    accepts(requestId: number) {
+      return isLatestPreviewRequest(requestId, latestRequestId);
+    },
+  };
+}
 
 export const VOICE_CATALOG: Record<StudioLanguage, Record<VoiceGender, VoicePreset[]>> = {
   mandarin: {

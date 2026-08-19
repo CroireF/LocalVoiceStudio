@@ -42,4 +42,51 @@
 - [x] Sync the documentation update to the local Git repository and provide the commit and GitHub editing steps.
 - [x] Reorder language buttons with English first, Spanish second, Mandarin third, and Cantonese fourth.
 - [x] Add language-specific default scripts and update the script editor whenever the selected language changes.
-- [ ] Add tests for language order and language-to-script mapping, then validate the updated interface and sync the local project.
+- [x] Add tests for language order and language-to-script mapping, then validate the updated interface and sync the local project.
+- [x] Assess and document local/free/open-source implementation boundaries for real-time speech preview, speaker adaptation, random-melody humming, and melody-guided humming.
+- [x] Replace the single Create voice entry with an animated welcome page and three child navigation modes: Batch text-to-speech, Live voice preview, and Voice clone.
+- [x] Add multi-paragraph batch generation with a line-break segmentation switch that controls whether each line is rendered as a separate audio segment.
+- [x] Add local cached live voice preview that speaks newly typed text without creating an export until Generate voice is selected.
+- [x] Add an explicit-consent voice-clone recording flow with microphone capture, a local voice profile, and a safe fallback when no local clone engine is installed. XTTS-v2 rendering was subsequently verified by the user in the local frontend.
+- [x] Add Create humming as a peer navigation section with an animated welcome page and two child modes: Random melody and Melody-guided humming.
+- [x] Add random-melody humming controls for mood, BPM, style, voice gender, frequency, pitch, and volume, with free local audio preview/export.
+- [x] Add microphone melody capture and melody-guided humming controls, with local cache and export behavior.
+- [x] Expand README documentation for all new modes, local dependency setup, privacy boundaries, and removed GitHub Description block.
+- [x] Add unit/integration tests, run type checks, and visually verify desktop/mobile navigation and each new workspace.
+- [x] Close the optional explicit XTTS-v2 integration-test follow-up without running another long test, per the user's instruction to preserve the working frontend and compatibility repair. The user reports successful local frontend clone use; no reproducible automated pass is claimed.
+- [x] Retain the user-reported local XTTS-v2 clone success as a manual verification note and preserve the complete PyTorch compatibility diagnosis; do not claim captured automated export evidence.
+- [x] Retain the MPS test status as unverified and do not run another long MPS export test, per the user's instruction to preserve the current working local environment.
+- [x] Restore the sidebar lower information card with its original “100% local workflow” wording and icon treatment.
+- [x] Replace the browser-tab favicon and in-app brand mark with the user-provided `logo.svg` asset.
+- [x] Give each Create Voice and Create Humming navigation mode its own stable route instead of a shared hash address.
+- [x] Add a Voice Clone engine selector for XTTS-v2 and the optional local CosyVoice-2/3 runner, including truthful local setup and licensing boundaries.
+- [x] Change Random Melody into text-driven, unaccompanied humming, with an optional CosyVoice-2/3 text-to-hum path and no instrumental accompaniment. CosyVoice models remain an explicit user-installed local option.
+- [x] Preserve and reuse the earlier output preview card design for generated voice and humming renders.
+- [x] Increase global interface typography and Script Editor height, reducing empty visual space while preserving responsive layout.
+- [x] Expand Create Voice and Create Humming welcome pages with full-page motion, richer interactive cards, and in-card Try actions for every navigation mode.
+- [x] Preserve the automated-validation limitation as documented context while closing further long test execution at the user's request.
+- [x] Stop the existing user-local process on port 3000 and start the updated VoiceStudio frontend from the local repository. The updated app is listening on localhost:3000 and returned HTTP 200.
+- [x] Diagnose the user-reported XTTS-v2 integration failure, preserving the complete Python stderr so the error is actionable. The failure was traced to PyTorch 2.6+ checkpoint loading and a torch/torchaudio ABI mismatch; the local setup now pins torch and torchaudio 2.5.1 with a clear runtime error message.
+- [x] Keep the supplied SVG only as the browser-tab favicon and remove it from the sidebar application branding.
+- [x] Restore a waveform-led Output preview card with active playback controls, latest-render metadata, and MP3/WAV/AAC export selection.
+- [x] Fill the lower portion of text-editor cards with useful local workflow guidance and improve their visual balance across workspaces.
+- [x] Apply the primary Try button visual style to every right-side welcome-page feature-card action.
+- [x] Preserve the current working local frontend and XTTS-v2 compatibility repair without running another long integration test.
+- [x] Restore all interface typography to the pre-enlargement baseline and document the primary file and style tokens for manual font-size adjustments. Desktop and mobile layouts were visually verified at the restored 100% HTML font-size baseline.
+- [x] Restore the /create-voice/batch layout and styling from commit 9da5197 while retaining the current Line-break output control and segmented batch generation behavior. Desktop and mobile layouts were verified.
+- [x] Restore the exact 9da5197 Batch Text Output preview default animation and Generation history card, including persisted history, Voice/Created/Length columns, replay/export actions, and only Line-break output as the new layout extension. Desktop and mobile layouts were verified.
+- [x] Reorder Batch Text so Script editor, Language, and Performance style with all four parameter sliders appear in the left column, while Voice direction and Output preview remain in the right column. Desktop and mobile layouts were verified.
+- [x] Automatically regenerate and play a local current-script preview after Batch Text performance parameters change, without replacing the explicit Line-break output generation control. A page-level component test verifies debouncing, latest-response playback, stale-response rejection, and manual Line-break output behavior.
+- [x] Display the four Batch Text performance-style presets in one desktop row and move the Line-break output control back into the Script editor card. Desktop and mobile layouts were verified.
+- [x] Verify and fix Batch Text Voice direction so each selected voice preset changes the generated local audio timbre, then place Voice direction above Performance style in the left column while keeping Output preview on the right. Page-level tests confirm selected voiceId is sent to the local Edge voice route; desktop and mobile layouts were verified.
+- [x] Rebuild /create-voice/clone with Batch Text-aligned setting cards, Output preview, and Generation history while preserving local consent and reference-recording safeguards. Desktop and mobile layouts were verified.
+- [x] Rename Live Preview output to “Live preview” and add Render language, Voice direction timbre selection, and Performance style controls without breaking browser-speech audition behavior. Page-level tests verify Live preview title and browser voice selection; desktop and mobile layouts were verified.
+- [x] Remove the left-side welcome-page primary buttons for Create Voice and Create Humming, and use the matching sidebar navigation icons in the three right-side feature cards. Desktop and mobile layouts were verified.
+- [x] Restore Live Preview to a two-column layout with Local preview cache and Live preview stacked in the right column and all remaining controls in the left column. Desktop and mobile layouts were verified.
+- [x] Replace the Create Humming sidebar icon with Wand Sparkles and make every unloaded Output preview show an English text-to-speech default preview state. Verified in Batch Text, Voice Clone, Live Preview, and Text Humming; the default card displays the English sample sentence and opens a browser English text-to-speech audition from its play control.
+- [x] Add a clear English non-commercial, local-research-only XTTS-v2 notice to the Voice Clone workspace and README.
+- [x] Sync the completed creation suite to the local Git repository and provide a focused commit message.
+- [x] Inspect the latest two commits, worktree state, and GitHub branch before rewriting history.
+- [x] Squash the latest two local commits into one English commit while preserving all files.
+- [x] Force-with-lease push the rewritten history and verify local and remote branches agree.
+- [x] Rewrite README.md with a fuller feature overview and practical local-operation guide, while removing font-size customization details that are too granular for standard project documentation. The guide now covers all five creation modes, local data boundaries, 13-language engine support, export behavior, optional XTTS-v2/CosyVoice setup, verification, and practical troubleshooting.

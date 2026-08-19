@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_SCRIPT, DEFAULT_VOICE, LANGUAGE_OPTIONS, STYLE_PRESETS, VOICE_CATALOG } from "./voice";
+import { createAutoPreviewSequencer, DEFAULT_SCRIPT, DEFAULT_VOICE, isLatestPreviewRequest, LANGUAGE_OPTIONS, prepareBatchJobs, STYLE_PRESETS, VOICE_CATALOG } from "./voice";
 
 describe("VoiceStudio voice catalog", () => {
   it("prioritizes English, Spanish, Mandarin, and Cantonese in the language selector", () => {
@@ -26,6 +26,28 @@ describe("VoiceStudio voice catalog", () => {
     expect(DEFAULT_SCRIPT.cantonese).toContain("清晨");
   });
 
+  it("uses line breaks as independent jobs only when batch segmentation is enabled", () => {
+    const script = "First line\n\nSecond line";
+    expect(prepareBatchJobs(script, false)).toEqual(["First line\n\nSecond line"]);
+    expect(prepareBatchJobs(script, true)).toEqual(["First line", "Second line"]);
+    expect(prepareBatchJobs("\n\n", true)).toEqual([]);
+  });
+
+  it("accepts only the latest automatic performance-preview request", () => {
+    expect(isLatestPreviewRequest(4, 4)).toBe(true);
+    expect(isLatestPreviewRequest(3, 4)).toBe(false);
+  });
+
+  it("prevents a stale parameter-preview response from overwriting the newest response", () => {
+    const sequencer = createAutoPreviewSequencer();
+    const pitchChangeRequest = sequencer.issue();
+    const rateChangeRequest = sequencer.issue();
+    const appliedResponses: string[] = [];
+    if (sequencer.accepts(rateChangeRequest)) appliedResponses.push("rate-change");
+    if (sequencer.accepts(pitchChangeRequest)) appliedResponses.push("pitch-change");
+    expect(appliedResponses).toEqual(["rate-change"]);
+  });
+
   it("assigns documented local fallback engines for low-resource languages", () => {
     expect(VOICE_CATALOG.quechua.female[0].engine).toBe("espeak");
     expect(VOICE_CATALOG.guarani.male[0].engine).toBe("espeak");
@@ -38,4 +60,3 @@ describe("VoiceStudio voice catalog", () => {
     expect(STYLE_PRESETS.every(style => style.pause >= 0 && style.pause <= 1.2)).toBe(true);
   });
 });
-
